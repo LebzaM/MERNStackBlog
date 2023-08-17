@@ -1,20 +1,63 @@
 import React, { useState } from 'react';
-
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { authAction } from '../store';
 const Auth = () => {
+  const isLoggedIn = useSelector((state) => state.isLoggedIn);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [isSignup, setIsSignup] = useState(false);
+  const [user, setUser] = useState({
+    name: '',
+    email: '',
+    password: '',
+  });
 
+  const handleChange = (e) => {
+    setUser((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
   const handleToggle = () => {
     setIsSignup(!isSignup);
   };
+
+  const sendRequest = async (type = 'login') => {
+    const res = await axios
+      .post(`http://localhost:5000/api/user/${type}`, {
+        name: user.name,
+        email: user.email,
+        password: user.password,
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    const data = await res.data;
+    return data;
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (isSignup) {
+      sendRequest('signup')
+        .then(() => dispatch(authAction.login()))
+        .then(() => navigate('/blogs'));
+    } else {
+      sendRequest()
+        .then(() => dispatch(authAction.login()))
+        .then(() => navigate('/blogs'));
+    }
+  };
   return (
-    <div>
-      <div className="max-w-lg w-full space-y-8 mx-auto">
+    <div className="w-full h-full flex items-center justify-center bg-gray-50">
+      <div className="max-w-md w-full mx-auto">
         <div>
           <h2 className="mt-6 text-center text-3xl font-semibold text-gray-900">
             {isSignup ? 'Sing up' : 'Log in'}
           </h2>
         </div>
-        <form className="mt-6 space-y-6">
+        <form className="mt-6 space-y-6" onSubmit={handleSubmit}>
           <div>
             {isSignup ? (
               <div>
@@ -25,6 +68,8 @@ const Auth = () => {
                   name="name"
                   autoComplete="name"
                   required
+                  value={user.name}
+                  onChange={handleChange}
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border text-gray-600 placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-lg"
                 />
               </div>
@@ -39,6 +84,8 @@ const Auth = () => {
                 name="email"
                 autoComplete="email"
                 required
+                value={user.email}
+                onChange={handleChange}
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border text-gray-600 placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-lg"
               />
             </div>
@@ -50,19 +97,25 @@ const Auth = () => {
                 name="password"
                 autoComplete="password"
                 required
+                value={user.password}
+                onChange={handleChange}
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border text-gray-600 placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-lg"
               />
             </div>
             <div>
               <button
                 type="submit"
-                className="mt-4 px-4 py-2 bg-purple-600 text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline"
+                className="relative w-full flex justify-center py-4 px-4  border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 mt-6"
               >
-                Submit
+                {isSignup ? 'Sign Up' : 'Log In'}
               </button>
             </div>
             <div className="mt-4">
-              <button type="button" onClick={handleToggle}>
+              <button
+                type="button"
+                onClick={handleToggle}
+                className="mt-4 px-4 py-2 text-lg text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline "
+              >
                 {isSignup
                   ? 'Already have an account? Login'
                   : "Don't have an account? Sing up"}
