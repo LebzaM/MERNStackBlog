@@ -41,10 +41,12 @@ const Auth = () => {
     e.preventDefault();
     if (isSignup) {
       sendRequest('signup')
+        .then((data) => localStorage.setItem('userId', data.user._id))
         .then(() => dispatch(authAction.login()))
         .then(() => navigate('/blogs'));
     } else {
       sendRequest()
+        .then((data) => localStorage.setItem('userId', data.user._id))
         .then(() => dispatch(authAction.login()))
         .then(() => navigate('/blogs'));
     }
