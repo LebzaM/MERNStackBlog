@@ -10,6 +10,8 @@
 
 [Class recording-5-part2](https://youtu.be/WFOdGIy07Gk)
 
+[Class recording-6](https://youtu.be/ebuBNTIdb64)
+
 # blog
 
 mern stack blog

@@ -15,9 +15,9 @@ const UserBlog = () => {
   useEffect(() => {
     sendRequest().then((data) => setUser(data.user));
   }, []);
-  console.log(user);
+  console.log('user', user);
   return (
-    <div>
+    <div className="flex gap-4 flex-wrap">
       {user &&
         user.blogs.map((blog) => (
           <Card

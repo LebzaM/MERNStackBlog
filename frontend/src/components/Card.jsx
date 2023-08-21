@@ -1,7 +1,23 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-export default function Card({ id, title, description, image }) {
+import axios from 'axios';
+export default function Card({ id, title, description, image, isUser }) {
   const navigate = useNavigate();
+  console.log(isUser);
+
+  const deleteRequest = async () => {
+    const res = await axios
+      .delete(`http://localhost:5000/api/blog/delete/${id}`)
+      .catch((err) => console.log(err));
+    const data = await res.data;
+    return data;
+  };
+
+  const handleDelete = async () => {
+    deleteRequest()
+      .then(() => navigate('/'))
+      .then(() => navigate('/blogs'));
+  };
   return (
     <div className="w-full rounded-lg shadow-md lg:max-w-sm">
       <img className="object-cover w-full h-48" src={image} alt="image" />
@@ -16,6 +32,23 @@ export default function Card({ id, title, description, image }) {
         >
           Read more
         </button>
+
+        {isUser && (
+          <div className="flex gap-2 mt-2">
+            <button
+              className="bg-purple-600 text-white px-4 py-2 text-lg cursor-pointer "
+              onClick={() => navigate(`/update-blog/${id}`)}
+            >
+              Update
+            </button>
+            <button
+              className="bg-red-600 text-white px-4 py-2 text-lg cursor-pointer"
+              onClick={handleDelete}
+            >
+              Delete
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

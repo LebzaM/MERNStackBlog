@@ -8,12 +8,17 @@ import Blogs from './components/Blogs';
 import BlogDetail from './components/BlogDetail';
 import UserBlog from './components/UserBlog';
 import AddBlog from './components/AddBlog';
+import UpdateBlog from './components/UpdateBlog';
 
 const router = createBrowserRouter([
   {
     element: <Root />,
     errorElement: <ErrorPage />,
     children: [
+      {
+        path: '/auth',
+        element: <Auth />,
+      },
       {
         path: '/',
         element: <Home />,
@@ -22,10 +27,7 @@ const router = createBrowserRouter([
         path: '/blogs',
         element: <Blogs />,
       },
-      {
-        path: '/auth',
-        element: <Auth />,
-      },
+
       {
         path: '/user-blog/',
         element: <UserBlog />,
@@ -37,6 +39,10 @@ const router = createBrowserRouter([
       {
         path: '/add-blog',
         element: <AddBlog />,
+      },
+      {
+        path: '/update-blog/:id',
+        element: <UpdateBlog />,
       },
     ],
   },
