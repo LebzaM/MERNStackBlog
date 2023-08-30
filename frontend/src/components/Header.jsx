@@ -8,11 +8,14 @@ const Header = () => {
   const dispatch = useDispatch();
 
   return (
-    <header className="bg-blue-500 text-white py-4">
+    <header className=" bg-orange-300 text-white py-4">
       <div className="container mx-auto flex justify-between items-center">
         <h1 className="text-4xl font-semibold">
-          <Link to="/">My Blog</Link>
+          <Link to="/">OleBlog</Link>
         </h1>
+        <p className="text-1xl font-semibold">
+          Simply post a blog below
+        </p>
         {isLoggedIn && (
           <nav className="flex gap-6 items-center text-lg font-medium">
             <Link to="/">Home</Link>

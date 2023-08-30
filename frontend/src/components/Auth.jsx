@@ -55,7 +55,7 @@ const Auth = () => {
       <div className="max-w-md w-full mx-auto">
         <div>
           <h2 className="mt-6 text-center text-3xl font-semibold text-gray-900">
-            {isSignup ? 'Sing up' : 'Log in'}
+            {isSignup ? 'Sign up' : 'Log in'}
           </h2>
         </div>
         <form className="mt-6 space-y-6" onSubmit={handleSubmit}>
@@ -118,8 +118,8 @@ const Auth = () => {
                 className="mt-4 px-4 py-2 text-lg text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline "
               >
                 {isSignup
-                  ? 'Already have an account? Login'
-                  : "Don't have an account? Sing up"}
+                  ? 'Already have an account? Simply Login'
+                  : "Don't have an account? Sign up"}
               </button>
             </div>
           </div>
